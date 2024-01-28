@@ -1,0 +1,10 @@
+connector:
+  deploymentName: coinbase-connector-deployment
+  serviceName: coinbase-connector-service
+  appName: coinbase-connector
+  image: coinbase-connector:latest
+  imagePullPolicy: Never
+  replicas: 1
+kafka:
+  address: "kafka-cluster-kafka-bootstrap.dev.svc.cluster.local:9092"
+  topic: "ticker"

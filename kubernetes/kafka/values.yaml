@@ -1,0 +1,8 @@
+cluster:
+  storage: ephemeral
+  kafka:
+    replicas: 1
+  zookeeper:
+    replicas: 1
+topics:
+  - ticker

@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+import sys
 
 import kafka
 import websockets
@@ -8,6 +9,12 @@ import websockets
 # logging configuration
 
 logger = logging.getLogger("coinbase-connector")
+logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 
 # kafka producer configuration
@@ -22,7 +29,7 @@ def kafka_producer(server_address: str) -> kafka.KafkaProducer:
 
 async def publish_message_to_kafka(producer: kafka.KafkaProducer, topic: str, message: str) -> None:
     logger.info(f"Message: {message}")
-    await producer.send(topic, message)
+    producer.send(topic, message)
 
 
 # coinbase consumption logic

@@ -1,3 +1,5 @@
+# source code and unit testing
+
 .PHONY: install
 install:
 	python -m pip install --upgrade pip
@@ -35,5 +37,20 @@ test_format:
 
 .PHONY: test_unit
 test_unit:
-	# make install
+	make install
 	make pytest
+
+# deployment and integration testing
+
+.PHONY: docker-build
+docker-build:
+	docker build -t coinbase-connector .
+
+.PHONY: test_integration
+test_integration:
+	make docker-build
+	cd scripts
+	./install-strimzi.sh
+	./deploy-kafka.sh
+	./deploy-connector.sh
+	# ./test-integration.sh

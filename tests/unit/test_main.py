@@ -5,6 +5,7 @@ import coinbase.main as main
 
 
 def test_connect_and_serve(kafka_producer):
+    print("cool")
 
     # run streaming loop for 10 seconds
     try:
