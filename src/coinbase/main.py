@@ -5,7 +5,6 @@ import logging
 import kafka
 import websockets
 
-
 # logging configuration
 
 logger = logging.getLogger("coinbase-connector")
@@ -13,10 +12,11 @@ logger = logging.getLogger("coinbase-connector")
 
 # kafka producer configuration
 
+
 def kafka_producer(server_address: str) -> kafka.KafkaProducer:
     return kafka.KafkaProducer(
         bootstrap_servers=[server_address],
-        value_serializer=lambda v: v.encode('utf-8'),
+        value_serializer=lambda v: v.encode("utf-8"),
     )
 
 
@@ -29,14 +29,7 @@ async def publish_message_to_kafka(producer: kafka.KafkaProducer, topic: str, me
 
 default_coinbase_address = "wss://ws-feed.exchange.coinbase.com"
 
-coinbase_subscription_message = {
-    "type": "subscribe",
-    "product_ids": [
-        "ETH-USD",
-        "BTC-USD"
-    ],
-    "channels": ["ticker"]
-}
+coinbase_subscription_message = {"type": "subscribe", "product_ids": ["ETH-USD", "BTC-USD"], "channels": ["ticker"]}
 
 
 async def subscribe_to_feeds(websocket: websockets.WebSocketClientProtocol):
@@ -45,18 +38,19 @@ async def subscribe_to_feeds(websocket: websockets.WebSocketClientProtocol):
 
 async def message_handler(websocket: websockets.WebSocketClientProtocol, producer: kafka.KafkaProducer, topic: str):
     async for message in websocket:
-        await publish_message_to_kafka(producer, topic, message)
+        await publish_message_to_kafka(producer, topic, message)  # type: ignore
 
 
-async def connect_and_serve(coinbase_address: str,  producer: kafka.KafkaProducer, topic: str):
+async def connect_and_serve(coinbase_address: str, producer: kafka.KafkaProducer, topic: str):
     async with websockets.connect(coinbase_address) as websocket:
         await subscribe_to_feeds(websocket)
         subscription = await websocket.recv()  # skip the first message, which is the subscription message
-        logger.info(f"Subscribed: {subscription}")
+        logger.info(f"Subscribed: {subscription}")  # type: ignore
         await message_handler(websocket, producer, topic)
 
 
 # client reads from coinbase feed and publishes to kafka
+
 
 async def main(coinbase_address: str, kafka_address: str, kafka_topic: str):
     """Connector between coinbase websocket feeds and kafka.

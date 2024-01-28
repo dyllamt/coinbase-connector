@@ -35,5 +35,5 @@ test_format:
 
 .PHONY: test_unit
 test_unit:
-	make install
+	# make install
 	make pytest

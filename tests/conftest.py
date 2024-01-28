@@ -6,9 +6,8 @@ class KafkaMockProducer(kafka.KafkaProducer):
 
     def __init__(self):
         self.messages = []  # collects messages sent by producer
-        return self
 
-    def send(self, topic: str, message: str):
+    async def send(self, topic: str, message: str):
         self.messages.append(message)
 
 
