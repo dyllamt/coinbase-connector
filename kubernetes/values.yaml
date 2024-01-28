@@ -1,0 +1,8 @@
+env: "dev"
+
+deploymentName: coinbase-connector-deployment
+serviceName: coinbase-connector-service
+appName: coinbase-connector
+image: coinbase-connector:latest
+imagePullPolicy: Never
+replicas: 1

@@ -1,4 +1,6 @@
 # application
+kafka-python
+websockets
 
 # testing
 black

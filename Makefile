@@ -26,18 +26,14 @@ mypy:
 pytest:
 	pytest tests/
 
-.PHONY: format
-format:
+.PHONY: test_format
+test_format:
 	make black
 	make isort
 	make flake8
 	make mypy
 
-.PHONY: test
-test:
+.PHONY: test_unit
+test_unit:
 	make install
-	make isort
-	make black
-	make flake8
-	make mypy
 	make pytest

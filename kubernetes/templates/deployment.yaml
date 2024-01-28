@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deploymentName }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+    spec:
+      containers:
+        - name: {{ .Values.appName }}
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: 8000
+        #   env:
+        #   - name: REDIS_SERVICE_URL
+        #     value: {{ .Values.redis.serviceURL }}
+        #   - name: OPENAI_API_KEY
+        #     valueFrom:
+        #       secretKeyRef:
+        #         name: openai-api-key
+        #         key: OPENAI_API_KEY

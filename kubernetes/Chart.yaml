@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: "0.1.0"
+description: "Websockets client, forwarding data to kafka topic"
+name: coinbase-connector
+version: 0.0.1
