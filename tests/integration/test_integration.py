@@ -1,14 +1,16 @@
 import json
 
-import kafka
+from coinbase.utils import run_script
 
 
-def test_integration(kubernetes_services):
-    consumer = kafka.KafkaConsumer(
-        'ticker',
-        bootstrap_servers=['localhost:9092'],
-        value_deserializer=lambda x: json.loads(x.decode('utf-8')),
-    )
+def test_messages_in_topic(kubernetes_services):
 
-    for message in consumer:
-        print(message)
+    # executes kafka listener on a broker node
+    out, err = run_script("scripts/run-consumer.sh")
+
+    # checks for any issues running the kafka listener
+    assert not err
+
+    # checks that there are valid json messages
+    res = [json.loads(i) for i in out.strip().split("\n")]
+    assert res[0]["type"] == "ticker"

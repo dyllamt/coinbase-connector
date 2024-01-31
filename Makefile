@@ -24,10 +24,6 @@ flake8:
 mypy:
 	mypy --ignore-missing-imports src
 
-.PHONY: pytest
-pytest:
-	pytest tests/
-
 .PHONY: test_format
 test_format:
 	make black
@@ -38,7 +34,7 @@ test_format:
 .PHONY: test_unit
 test_unit:
 	make install
-	make pytest
+	pytest tests/unit/
 
 # deployment and integration testing
 
@@ -48,9 +44,4 @@ docker-build:
 
 .PHONY: test_integration
 test_integration:
-	make docker-build
-	cd scripts
-	./install-strimzi.sh
-	./deploy-kafka.sh
-	./deploy-connector.sh
-	# ./test-integration.sh
+	pytest tests/integration/

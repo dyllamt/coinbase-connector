@@ -12,7 +12,7 @@ logger = logging.getLogger("coinbase-connector")
 logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler(sys.stdout)
 handler.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
@@ -28,7 +28,7 @@ def kafka_producer(server_address: str) -> kafka.KafkaProducer:
 
 
 async def publish_message_to_kafka(producer: kafka.KafkaProducer, topic: str, message: str) -> None:
-    logger.info(f"Message: {message}")
+    logger.info(f"{message}")
     producer.send(topic, message)
 
 
@@ -52,7 +52,7 @@ async def connect_and_serve(coinbase_address: str, producer: kafka.KafkaProducer
     async with websockets.connect(coinbase_address) as websocket:
         await subscribe_to_feeds(websocket)
         subscription = await websocket.recv()  # skip the first message, which is the subscription message
-        logger.info(f"Subscribed: {subscription}")  # type: ignore
+        logger.info(f"{subscription}")  # type: ignore
         await message_handler(websocket, producer, topic)
 
 
