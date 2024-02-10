@@ -26,6 +26,7 @@ mypy:
 
 .PHONY: test_format
 test_format:
+	make install
 	make black
 	make isort
 	make flake8
