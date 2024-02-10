@@ -1,6 +1,9 @@
 # coinbase-connector
 Connector between coinbase websocket feeds and kafka.
 
+
+# Developer Notes
+
 ## Testing
 
 - `make test_format` tests formating and performs static type checking
@@ -24,6 +27,6 @@ Connector between coinbase websocket feeds and kafka.
 #### Warnings
 - coinbase reconnection errors
 
-## Notes
+## Replicas
 
 If multiple replicas are deployed, kafka consumers should implement deduplication logic.
