@@ -45,4 +45,4 @@ docker-build:
 
 .PHONY: test_integration
 test_integration:
-	pytest tests/integration/
+	pytest tests/integration/ -s
