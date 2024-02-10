@@ -26,6 +26,7 @@ mypy:
 
 .PHONY: test_format
 test_format:
+	make install
 	make black
 	make isort
 	make flake8
@@ -44,4 +45,4 @@ docker-build:
 
 .PHONY: test_integration
 test_integration:
-	pytest tests/integration/
+	pytest tests/integration/ -s
