@@ -14,9 +14,10 @@ spec:
       annotations:
         rollme: {{ randAlphaNum 5 | quote }}
     spec:
-      initContainers:  # avoids race condition for kafka cluster setup
-        - name: wait-for-kafka
+      initContainers:
+        - name: wait-for-kafka  # avoids race condition for kafka cluster setup
           image: bitnami/kubectl:latest
+          imagePullPolicy: Always
           command: 
             - /bin/bash
             - -c

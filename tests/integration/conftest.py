@@ -4,12 +4,13 @@ from coinbase.utils import run_script
 
 
 def setup():
-    run_script("scripts/setup.sh")
+    out, err = run_script("scripts/setup.sh")
+    print(out, err)
 
 
 def teardown():
-    run_script("scripts/teardown.sh")
-    print("teardown complete")
+    out, err = run_script("scripts/teardown.sh")
+    print(out, err)
 
 
 @pytest.fixture(scope="module")
