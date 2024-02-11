@@ -14,14 +14,19 @@ spec:
       annotations:
         rollme: {{ randAlphaNum 5 | quote }}
     spec:
-      initContainers:
+      initContainers:  # avoids race condition for kafka cluster setup
         - name: wait-for-kafka
           image: bitnami/kubectl:latest
           command: 
             - /bin/bash
             - -c
             - |
-              kubectl wait kafka/coinbase-cluster --for=condition=Ready --timeout=300s -n dev
+              kubectl wait kafka/$KAFKA_CLUSTER_NAME --for=condition=Ready --timeout=300s -n $KAFKA_CLUSTER_NAMESPACE
+          env:
+            - name: KAFKA_CLUSTER_NAMESPACE
+              value: {{ .Values.kafka.clusterNamespace }}
+            - name: KAFKA_CLUSTER_NAME
+              value: {{ .Values.kafka.clusterName }}
       containers:
         - name: {{ .Values.connector.appName }}
           image: {{ .Values.connector.image }}
