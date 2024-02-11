@@ -19,9 +19,9 @@ install_requires = open(path.join(here, "requirements.txt")).read().strip().spli
 
 
 setup(
-    name='PROJECT',
+    name='coinbase-connector',
     version=version,
-    description='DESCRIPTION.',
+    description='Forwarding service from coinbase to kafka.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Maxwell Dylla',
