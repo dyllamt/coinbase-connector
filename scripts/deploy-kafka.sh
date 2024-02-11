@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install Kafka cluster 
-helm install kafka-cluster ../kubernetes/kafka/ -f ../kubernetes/kafka/values.yaml --namespace dev --wait
+helm install kafka-cluster ../charts/kafka/ -f ../charts/kafka/values.yaml --namespace dev --wait
 
 # Wait for the Kafka pod to be created
 POD_NAME="kafka-cluster-kafka-0"

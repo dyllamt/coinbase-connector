@@ -3,9 +3,9 @@ import subprocess
 
 
 def get_project_root():
-    integration_tests_dir = os.path.dirname(os.path.abspath(__file__))
-    tests_dir = os.path.dirname(integration_tests_dir)
-    project_root = os.path.dirname(tests_dir)
+    library_dir = os.path.dirname(os.path.abspath(__file__))
+    src_dir = os.path.dirname(library_dir)
+    project_root = os.path.dirname(src_dir)
     return project_root
 
 
