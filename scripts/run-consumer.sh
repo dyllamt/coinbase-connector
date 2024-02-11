@@ -10,7 +10,7 @@ KAFKA_NAMESPACE="dev"
 KAFKA_POD_NAME=kafka-cluster-kafka-0
 
 # For stopping when message consumption
-TIMEOUT_DURATION=10
+TIMEOUT_DURATION=30
 
 # # Command to list all Kafka topics
 # echo "Listing all Kafka topics:"
