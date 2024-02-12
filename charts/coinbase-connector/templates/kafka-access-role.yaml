@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1  # needed to check for whether kafka is ready
+kind: Role
+metadata:
+  namespace: dev
+  name: kafka-access-role
+rules:
+- apiGroups: ["kafka.strimzi.io"]
+  resources: ["kafkas"]
+  verbs: ["get", "list", "watch"]  # Add "list" and "watch" if needed for broader access
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kafka-access-default-sa
+  namespace: dev
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: dev
+roleRef:
+  kind: Role
+  name: kafka-access-role
+  apiGroup: rbac.authorization.k8s.io

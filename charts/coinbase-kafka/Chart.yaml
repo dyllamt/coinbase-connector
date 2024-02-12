@@ -1,5 +1,5 @@
 apiVersion: v2
 appVersion: "0.1.0"
 description: "Strimzi: Apache Kafka running on Kubernetes"
-name: kafka-cluster
+name: coinbase-kafka
 version: 0.0.1

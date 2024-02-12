@@ -6,9 +6,10 @@ Connector between coinbase websocket feeds and kafka.
 
 ## Testing
 
-- `make test_format` tests formating and performs static type checking
-- `make test_unit` tests live message consumption to a mock kafka stream
-- `make test_integration` tests kubernetes deployment with kafka service
+- `make install` install python dependencies.
+- `make test-format` tests formating and performs static type checking.
+- `make test-unit` tests live message consumption to a mock kafka stream.
+- `make test-integration` tests helm deployment with kafka broker.
 
 ## Deployment
 

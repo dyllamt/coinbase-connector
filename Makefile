@@ -24,25 +24,27 @@ flake8:
 mypy:
 	mypy --ignore-missing-imports src
 
-.PHONY: test_format
-test_format:
-	make install
+.PHONY: test-format
+test-format:
 	make black
 	make isort
 	make flake8
 	make mypy
 
-.PHONY: test_unit
-test_unit:
-	make install
+.PHONY: test-unit
+test-unit:
 	pytest tests/unit/
 
-# deployment and integration testing
+# containerization and integration testing
 
 .PHONY: docker-build
 docker-build:
 	docker build -t coinbase-connector .
 
-.PHONY: test_integration
-test_integration:
-	pytest tests/integration/ -s
+.PHONY: test-integration
+test-integration:
+	pytest tests/integration/
+
+# chart packaging and publishing
+
+
