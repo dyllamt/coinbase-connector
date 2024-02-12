@@ -1,0 +1,54 @@
+name: CI/CD Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+          
+      - name: Install dependencies
+        run: make install
+      
+      - name: Run Formatting Tests
+        run: make test-format
+
+      - name: Run Unit Tests
+        run: make test-unit
+
+  integration-tests:
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      
+      - name: Set up Kubernetes-in-Docker (kind)
+        uses: helm/kind-action@v1.4.0
+        with:
+          cluster_name: 'github-cluster'
+
+      - name: Build Docker Image
+        run: make docker-build
+
+      - name: Load Docker Image into kind Cluster
+        run: kind load docker-image coinbase-connector --name github-cluster
+
+      - name: Install dependencies
+        run: make install
+
+      - name: Run Integration Tests
+        run: make test-integration
