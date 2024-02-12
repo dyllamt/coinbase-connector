@@ -9,7 +9,7 @@ KAFKA_NAMESPACE="dev"
 # Kafka broker pod name (change this to match your Kafka broker pod name)
 KAFKA_POD_NAME=coinbase-cluster-kafka-0
 
-# For stopping when message consumption
+# For stopping message consumption
 TIMEOUT_DURATION=30
 
 # # Command to list all Kafka topics
