@@ -37,10 +37,14 @@ jobs:
         with:
           ref: 'main'
 
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.17'
+
       - name: Generate Documentation
         run: |
-          curl -sL https://github.com/norwoodj/helm-docs/releases/latest/download/helm-docs_linux_amd64.tar.gz | tar -xz
-          sudo mv helm-docs /usr/local/bin/helm-docs
+          go install github.com/norwoodj/helm-docs/cmd/helm-docs@latest
           cd charts
           for d in */ ; do
             helm-docs -c $d
