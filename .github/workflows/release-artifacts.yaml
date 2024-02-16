@@ -25,3 +25,40 @@ jobs:
         uses: helm/chart-releaser-action@v1.6.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+  helm-docs:
+    needs: helm-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: 'main'
+
+      - name: Generate Documentation
+        run: |
+          curl -sL https://github.com/norwoodj/helm-docs/releases/latest/download/helm-docs_linux_amd64.tar.gz | tar -xz
+          sudo mv helm-docs /usr/local/bin/helm-docs
+          cd charts
+          for d in */ ; do
+            helm-docs -c $d
+          done
+
+      - name: Checkout gh-pages Branch
+        uses: actions/checkout@v3
+        with:
+          ref: 'gh-pages'
+          path: 'gh-pages'
+
+      - name: Copy Documentation to gh-pages
+        run: |
+          cp -r charts/*/README.md gh-pages/
+
+      - name: Commit and Push Changes to gh-pages
+        run: |
+          cd gh-pages
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git add .
+          git commit -m "Update documentation" -a || echo "No changes to commit"
+          git push origin gh-pages

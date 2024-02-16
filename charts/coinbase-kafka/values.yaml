@@ -1,8 +1,12 @@
 cluster:
+  # -- storage class for broker logs
   storage: ephemeral
   kafka:
+    # -- number of broker replicas
     replicas: 1
   zookeeper:
+    # -- number of zookeper replicas
     replicas: 1
+# -- topics on the cluster
 topics:
   - ticker
