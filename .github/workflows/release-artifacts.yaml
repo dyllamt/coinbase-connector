@@ -58,7 +58,15 @@ jobs:
 
       - name: Copy Documentation to gh-pages
         run: |
-          cp -r charts/*/README.md gh-pages/
+          for CHART_DIR in charts/*; do
+            if [ -d "$CHART_DIR" ]; then  # Ensure it's a directory
+              CHART_NAME=$(basename $CHART_DIR)
+              # Create a matching directory structure in gh-pages
+              mkdir -p gh-pages/$CHART_NAME
+              # Copy the README.md for the chart
+              cp $CHART_DIR/README.md gh-pages/$CHART_NAME/
+            fi
+          done
 
       - name: Commit and Push Changes to gh-pages
         run: |
