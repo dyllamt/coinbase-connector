@@ -30,6 +30,8 @@ jobs:
 
   helm-docs:
     needs: helm-release
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -69,6 +71,8 @@ jobs:
           done
 
       - name: Commit and Push Changes to gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd gh-pages
           git config user.name "$GITHUB_ACTOR"
