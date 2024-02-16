@@ -1,6 +1,11 @@
 # coinbase-connector
 Connector between coinbase websocket feeds and kafka.
 
+# Contents
+
+There are two packaged charts developed in this project. You can find docs on the latest versions here:
+https://github.com/dyllamt/coinbase-connector/tree/gh-pages.
+
 # Developer Notes
 
 ## Local Testing
