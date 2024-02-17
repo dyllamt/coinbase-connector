@@ -5,8 +5,65 @@ on:
     branches:
       - main
 
+
 jobs:
+
+  get-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract_version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Extract version from file
+        id: extract_version
+        run: echo "::set-output name=version::$(cat VERSION)"
+
+  new-version-check:
+    needs: get-version
+    runs-on: ubuntu-latest
+    outputs:
+      should_release: ${{ steps.check_image.outputs.image_exists }}
+    steps:
+      - name: Check if Docker image exists with current version
+        id: check_image
+        run: |
+          VERSION=${{ needs.get-version.outputs.version }}
+          IMAGE_NAME="ghcr.io/dyllamt/coinbase-connector:$VERSION"
+          if curl -f -sL $IMAGE_NAME > /dev/null; then
+            echo "Docker image with version $VERSION exists."
+            echo "::set-output name=should_release::false"
+          else
+            echo "Docker image with version $VERSION does not exist."
+            echo "::set-output name=should_release::true"
+          fi
+
+  docker-push:
+    needs: [get-version, new-version-check]
+    if: needs.new-version-check.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/dyllamt/coinbase-connector:${{ needs.get-version.outputs.version }},ghcr.io/dyllamt/coinbase-connector:latest
+
   helm-release:
+    needs: [get-version, new-version-check]
+    if: needs.new-version-check.outputs.should_release == 'true'
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -21,15 +78,33 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Update Chart Versions
+        run: |
+          VERSION=${{ needs.prepare.outputs.version }}
+          CHARTS_DIR=charts
+          for CHART in $CHARTS_DIR/*; do
+            if [ -d "$CHART" ]; then
+              CHART_PATH="$CHART/Chart.yaml"
+              if [ -f "$CHART_PATH" ]; then
+                echo "Updating version in $CHART_PATH to $VERSION"
+                sed -i "s/version: .*/version: $VERSION/" $CHART_PATH
+              else
+                echo "No Chart.yaml found in $CHART"
+              fi
+            fi
+          done
+
       - name: Release Helm Charts
         uses: helm/chart-releaser-action@v1.6.0
         with:
           skip_existing: true
+          charts_dir: charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
   helm-docs:
-    needs: helm-release
+    needs: new-version-check
+    if: needs.new-version-check.outputs.should_release == 'true'
     permissions:
       contents: write
     runs-on: ubuntu-latest
