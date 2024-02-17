@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: check
-        run: echo {{ needs.new-version-check.outputs.should_release }}
+        run: echo ${{ needs.new-version-check.outputs.should_release }}
 
   docker-push:
     needs: [get-version, new-version-check]
