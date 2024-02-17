@@ -41,7 +41,7 @@ jobs:
 
   docker-push:
     needs: [get-version, new-version-check]
-    if: needs.new-version-check.outputs.should_release == 'true'
+    if: needs.new-version-check.outputs.should_release == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -63,7 +63,7 @@ jobs:
 
   helm-release:
     needs: [get-version, new-version-check]
-    if: needs.new-version-check.outputs.should_release == 'true'
+    if: needs.new-version-check.outputs.should_release == true
     permissions:
       contents: write
     runs-on: ubuntu-latest
