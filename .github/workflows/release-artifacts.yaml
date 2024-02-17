@@ -97,7 +97,6 @@ jobs:
       - name: Release Helm Charts
         uses: helm/chart-releaser-action@v1.6.0
         with:
-          skip_existing: true
           charts_dir: charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
