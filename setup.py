@@ -11,7 +11,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as fh:
 
 
 # version tag
-version = open(path.join(here, "version.txt")).read().strip()
+version = open(path.join(here, "VERSION")).read().strip()
 
 
 # requirements
