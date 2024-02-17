@@ -33,10 +33,10 @@ jobs:
           IMAGE_NAME="ghcr.io/dyllamt/coinbase-connector:$VERSION"
           if curl -f -sL $IMAGE_NAME > /dev/null; then
             echo "Docker image with version $VERSION exists."
-            echo "should_release=no" >> $GITHUB_OUTPUT
+            echo "should_release=false" >> $GITHUB_OUTPUT
           else
             echo "Docker image with version $VERSION does not exist."
-            echo "should_release=yes" >> $GITHUB_OUTPUT
+            echo "should_release=true" >> $GITHUB_OUTPUT
           fi
 
   check-version-check:
@@ -48,7 +48,7 @@ jobs:
 
   docker-push:
     needs: [get-version, new-version-check]
-    if: needs.new-version-check.outputs.should_release == "yes"
+    if: ${{ needs.new-version-check.outputs.should_release == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -70,7 +70,7 @@ jobs:
 
   helm-release:
     needs: [get-version, new-version-check]
-    if: needs.new-version-check.outputs.should_release == "yes"
+    if: ${{ needs.new-version-check.outputs.should_release == 'true' }}
     permissions:
       contents: write
     runs-on: ubuntu-latest
