@@ -28,15 +28,27 @@ jobs:
     steps:
       - name: Check if Docker image exists with current version
         id: check_image
+        env:
+          VERSION: ${{ needs.get-version.outputs.version }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          VERSION=${{ needs.get-version.outputs.version }}
-          IMAGE_NAME="ghcr.io/dyllamt/coinbase-connector:$VERSION"
-          if curl -f -sL $IMAGE_NAME > /dev/null; then
+          REGISTRY="ghcr.io"
+          REPO="dyllamt/coinbase-connector"
+          TAG="$VERSION"
+          MANIFEST_URL="https://$REGISTRY/v2/$REPO/manifests/$TAG"
+
+          AUTH_HEADER="Authorization: Bearer $GITHUB_TOKEN"
+          ACCEPT_HEADER="Accept: application/vnd.docker.distribution.manifest.v2+json"
+          HEADERS="-H \"$ACCEPT_HEADER\" -H \"$AUTH_HEADER\""
+
+          CURL_OPTIONS="-f -sL"
+
+          if curl $CURL_OPTIONS $HEADERS "$MANIFEST_URL" > /dev/null; then
             echo "Docker image with version $VERSION exists."
-            echo "should_release=false" >> $GITHUB_OUTPUT
+            echo "should_release=false" >> $GITHUB_ENV
           else
             echo "Docker image with version $VERSION does not exist."
-            echo "should_release=true" >> $GITHUB_OUTPUT
+            echo "should_release=true" >> $GITHUB_ENV
           fi
 
   check-version-check:
