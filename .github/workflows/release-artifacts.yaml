@@ -89,7 +89,7 @@ jobs:
 
       - name: Update Chart Versions
         run: |
-          VERSION=${{ needs.prepare.outputs.version }}
+          VERSION=${{ needs.get-version.outputs.version }}
           CHARTS_DIR=charts
           for CHART in $CHARTS_DIR/*; do
             if [ -d "$CHART" ]; then
