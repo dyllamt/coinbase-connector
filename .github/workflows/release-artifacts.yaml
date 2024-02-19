@@ -49,6 +49,8 @@ jobs:
   docker-push:
     needs: [get-version, new-version-check]
     if: ${{ needs.new-version-check.outputs.should_release == 'true' }}
+    permissions:
+      packages: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -100,6 +102,7 @@ jobs:
               fi
             fi
           done
+          cat charts/coinbase-connector/Chart.yaml
 
       - name: Release Helm Charts
         uses: helm/chart-releaser-action@v1.6.0
