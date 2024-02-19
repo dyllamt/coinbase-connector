@@ -101,6 +101,7 @@ jobs:
 
       - name: Update Chart Versions
         run: |
+          # set version number for each chart
           VERSION=${{ needs.get-version.outputs.version }}
           CHARTS_DIR=charts
           for CHART in $CHARTS_DIR/*; do
@@ -114,7 +115,12 @@ jobs:
               fi
             fi
           done
-          cat charts/coinbase-connector/Chart.yaml
+          # set default coinbase-connector docker image to current version
+          CHART_NAME="coinbase-connector"
+          VALUES_PATH="$CHARTS_DIR/$CHART_NAME/values.yaml"
+          IMAGE_TAG="ghcr.io/dyllamt/$CHART_NAME:$VERSION"
+          echo "Updating image in $VALUES_PATH to $IMAGE_TAG"
+          sed -i "s/image: .*/image: $IMAGE_TAG/" $VALUES_PATH
 
       - name: Release Helm Charts
         uses: helm/chart-releaser-action@v1.6.0

@@ -6,9 +6,9 @@ connector:
   # -- app name linking deployment and service
   appName: coinbase-connector
   # -- deployment image
-  image: coinbase-connector:latest
+  image: coinbase-connector:latest  # default overwritten by gh-actions
   # -- image pull policy
-  imagePullPolicy: Never
+  imagePullPolicy: IfNotPresent
   # -- replicas for deployment
   replicas: 1
 kafka:

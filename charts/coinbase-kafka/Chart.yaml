@@ -1,5 +1,4 @@
 apiVersion: v2
-appVersion: "0.1.0"
-description: "Simple cluster and topic for coinbase data."
+description: "Simple kafka deployment for coinbase data."
 name: coinbase-kafka
-version: 0.0.1  # dynamic version set by ghaction from VERSION file
+version: 0.0.1  # dynamic version set by gh-action from VERSION file
