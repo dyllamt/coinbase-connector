@@ -13,7 +13,7 @@ Once Helm has been set up correctly, add the repo as follows:
 
 If you had already added this repo earlier, to retrieve the latest versions of the packages:
 
-    helm repo update
+    helm repo update cc
 
 To see the charts:
 
