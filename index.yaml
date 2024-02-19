@@ -3,6 +3,15 @@ entries:
   coinbase-connector:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2024-02-19T03:57:28.167993655Z"
+    description: Forwarding service from coinbase to kafka.
+    digest: 43a8645e373f713672afb88978269b78a852ba69db828be6285cef67607c2d56
+    name: coinbase-connector
+    urls:
+    - https://github.com/dyllamt/coinbase-connector/releases/download/coinbase-connector-0.0.3/coinbase-connector-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2024-02-15T18:31:29.795331097Z"
     description: Forwarding service from coinbase to kafka.
     digest: 8fa76f24aa734f5a432cf465c2033ed60a8d6dbe46aa76e2ea621f61292353c4
@@ -13,6 +22,15 @@ entries:
   coinbase-kafka:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2024-02-19T03:57:28.275324672Z"
+    description: Simple cluster and topic for coinbase data.
+    digest: 16b00470977f4f0c43ddf558c985d9ddfc31e5f44fccb57477bfd28a11cadbfc
+    name: coinbase-kafka
+    urls:
+    - https://github.com/dyllamt/coinbase-connector/releases/download/coinbase-kafka-0.0.3/coinbase-kafka-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2024-02-15T18:31:29.899848331Z"
     description: 'Strimzi: Apache Kafka running on Kubernetes'
     digest: 6246aa30efef4a607ed7d41f9bdc6a556fc482f06ab189e9e6eb236afbf4b2e2
@@ -20,4 +38,4 @@ entries:
     urls:
     - https://github.com/dyllamt/coinbase-connector/releases/download/coinbase-kafka-0.0.1/coinbase-kafka-0.0.1.tgz
     version: 0.0.1
-generated: "2024-02-15T18:31:29.899859402Z"
+generated: "2024-02-19T03:57:28.275350259Z"
