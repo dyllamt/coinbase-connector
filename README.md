@@ -3,10 +3,21 @@ Connector between coinbase websocket feeds and kafka.
 
 # Contents
 
-There are two packaged charts developed in this project. You can find docs on the latest versions here:
-https://github.com/dyllamt/coinbase-connector/tree/gh-pages.
+The application impliments an async webserver that subscribes to coinbase websocket feeds and forwards the messages to kafka. It is recommended that you deploy it in a replica set.
+
+## Docker
+
+There is a docker image of the application published [here](https://github.com/dyllamt/coinbase-connector/pkgs/container/coinbase-connector).
+
+## Helm
+
+There is a packaged chart published [here](https://github.com/dyllamt/coinbase-connector/tree/gh-pages). A starter chart for kafka is also included.
 
 # Developer Notes
+
+## CI/CD
+- on pull requests: format, unit, and integration tests.
+- merge into main: docker and helm release (if [version](https://github.com/dyllamt/coinbase-connector/blob/main/VERSION) bumped).
 
 ## Local Testing
 
@@ -18,11 +29,11 @@ https://github.com/dyllamt/coinbase-connector/tree/gh-pages.
 ## Logging
 
 #### Info
-- subscription messages sent to coinbase
-- messages consumed from coinbase
+- subscription messages sent to coinbase.
+- messages consumed from coinbase.
 
 #### Warnings
-- coinbase reconnection errors
+- coinbase reconnection errors.
 
 ## Replicas
 
