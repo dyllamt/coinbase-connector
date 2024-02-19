@@ -120,7 +120,7 @@ jobs:
           VALUES_PATH="$CHARTS_DIR/$CHART_NAME/values.yaml"
           IMAGE_TAG="ghcr.io/dyllamt/$CHART_NAME:$VERSION"
           echo "Updating image in $VALUES_PATH to $IMAGE_TAG"
-          sed -i "s/image: .*/image: $IMAGE_TAG/" $VALUES_PATH
+          sed -i "s|image: .*|image: $IMAGE_TAG|" $VALUES_PATH
 
       - name: Release Helm Charts
         uses: helm/chart-releaser-action@v1.6.0
