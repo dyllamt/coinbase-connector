@@ -1,8 +1,8 @@
 # coinbase-kafka
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square)
 
-Simple cluster and topic for coinbase data.
+Simple kafka deployment for coinbase data.
 
 ## Values
 
