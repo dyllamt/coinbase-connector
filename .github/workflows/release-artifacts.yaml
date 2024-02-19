@@ -45,10 +45,10 @@ jobs:
 
           if curl $CURL_OPTIONS $HEADERS "$MANIFEST_URL" > /dev/null; then
             echo "Docker image with version $VERSION exists."
-            echo "should_release=false" >> $GITHUB_ENV
+            echo "should_release=false" >> $GITHUB_OUTPUT
           else
             echo "Docker image with version $VERSION does not exist."
-            echo "should_release=true" >> $GITHUB_ENV
+            echo "should_release=true" >> $GITHUB_OUTPUT
           fi
 
   check-version-check:
