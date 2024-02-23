@@ -1,13 +1,14 @@
-# coinbase-producer
-Kafka producer for coinbase feeds.
+<div align="center">
 
-# Packages
+<h1>coinbase-producer</h1>
+<p>Kafka producer for coinbase feeds.</p>
 
-[Producer image](https://github.com/dyllamt/coinbase-producer/pkgs/container/coinbase-producer)
-[Producer chart](https://github.com/dyllamt/coinbase-producer/tree/gh-pages/coinbase-producer).
-[Kafka chart](https://github.com/dyllamt/coinbase-producer/tree/gh-pages/coinbase-kafka)
+![](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
+[![](https://img.shields.io/badge/docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/dyllamt/coinbase-producer/pkgs/container/coinbase-producer)
+[![](https://img.shields.io/badge/helm-0F1689?style=for-the-badge&logo=Helm&labelColor=0F1689)](https://github.com/dyllamt/coinbase-producer/tree/gh-pages/)
 
-# Developer Notes
+</div>
+
 
 ## Logging
 
@@ -25,8 +26,8 @@ Kafka producer for coinbase feeds.
 - `make test-integration` tests helm deployment with kafka broker.
 
 ## CI/CD
-- `pull request`: format, unit, and integration tests.
-- `merge to main`: docker and helm release (if [version](https://github.com/dyllamt/coinbase-producer/blob/main/VERSION) bumped).
+- `pull request` format, unit, and integration tests.
+- `merge to main` docker and helm release (if [version](https://github.com/dyllamt/coinbase-producer/blob/main/VERSION) bumped).
 
 ## Deployment
 
