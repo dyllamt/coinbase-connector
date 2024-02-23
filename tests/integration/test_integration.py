@@ -4,7 +4,6 @@ from coinbase.utils import run_script
 
 
 def test_messages_in_topic(kubernetes_services):
-
     # executes kafka listener on a broker node
     out, err = run_script("scripts/test-consumer.sh")
 

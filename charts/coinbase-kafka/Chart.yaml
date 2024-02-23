@@ -1,4 +1,4 @@
 apiVersion: v2
-description: "Simple kafka deployment for coinbase data."
+description: "Kafka broker chart for coinbase feeds."
 name: coinbase-kafka
 version: 0.0.1  # dynamic version set by gh-action from VERSION file

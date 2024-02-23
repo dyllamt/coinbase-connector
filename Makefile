@@ -39,7 +39,7 @@ test-unit:
 
 .PHONY: docker-build
 docker-build:
-	docker build -t coinbase-connector .
+	docker build -t coinbase-producer .
 
 .PHONY: test-integration
 test-integration:

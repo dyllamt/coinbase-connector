@@ -1,12 +1,14 @@
 cluster:
+  # -- name of strimzi kafka crd
+  name: coinbase-kafka
   # -- storage class for broker logs
   storage: ephemeral
-  kafka:
+  broker:
     # -- number of broker replicas
     replicas: 1
   zookeeper:
     # -- number of zookeper replicas
     replicas: 1
-# -- topics on the cluster
+# -- published topics
 topics:
   - ticker

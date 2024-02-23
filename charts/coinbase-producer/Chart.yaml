@@ -1,4 +1,4 @@
 apiVersion: v2
-description: "Forwarding service from coinbase to kafka."
-name: coinbase-connector
+description: "Kafka producer for coinbase feeds."
+name: coinbase-producer
 version: 0.0.1  # dynamic version set by gh-action from VERSION file

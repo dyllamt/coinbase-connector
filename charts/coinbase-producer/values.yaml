@@ -1,12 +1,12 @@
-connector:
+producer:
   # -- name of deployment in k8s
-  deploymentName: coinbase-connector-deployment
+  deploymentName: coinbase-producer-deployment
   # -- name of service in k8s
-  serviceName: coinbase-connector-service
+  serviceName: coinbase-producer-service
   # -- app name linking deployment and service
-  appName: coinbase-connector
+  appName: coinbase-producer
   # -- deployment image
-  image: coinbase-connector:latest  # default overwritten by gh-actions
+  image: coinbase-producer:latest  # default overwritten by gh-actions
   # -- image pull policy
   imagePullPolicy: IfNotPresent
   # -- replicas for deployment
@@ -15,8 +15,8 @@ kafka:
   # -- namespace where kafka is deployed
   clusterNamespace: "dev"
   # -- name of the kafka cluster
-  clusterName: "coinbase-cluster"
+  clusterName: "coinbase-kafka"
   # -- address of the kafka cluster
-  address: "coinbase-cluster-kafka-bootstrap.dev.svc.cluster.local:9092"
+  address: "coinbase-kafka-kafka-bootstrap.dev.svc.cluster.local:9092"
   # -- the topic to forward data to
   topic: "ticker"

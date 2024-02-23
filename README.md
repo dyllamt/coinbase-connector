@@ -1,23 +1,25 @@
-# coinbase-connector
-Connector between coinbase websocket feeds and kafka.
+# coinbase-producer
+Kafka producer for coinbase feeds.
 
-# Contents
+#### Replicas
 
-The application impliments an async webserver that subscribes to coinbase websocket feeds and forwards the messages to kafka. It is recommended that you deploy it in a replica set.
+If replicas are deployed, message deduplication should be implemented in downstream components.
 
-## Docker
+# Packages
 
-There is a docker image of the application published [here](https://github.com/dyllamt/coinbase-connector/pkgs/container/coinbase-connector).
-
-## Helm
-
-There is a packaged chart published [here](https://github.com/dyllamt/coinbase-connector/tree/gh-pages). A starter chart for kafka is also included.
+[Producer image](https://github.com/dyllamt/coinbase-producer/pkgs/container/coinbase-producer)
+[Producer chart](https://github.com/dyllamt/coinbase-producer/tree/gh-pages/coinbase-producer).
+[Kafka chart](https://github.com/dyllamt/coinbase-producer/tree/gh-pages/coinbase-kafka)
 
 # Developer Notes
 
-## CI/CD
-- on pull requests: format, unit, and integration tests.
-- merge into main: docker and helm release (if [version](https://github.com/dyllamt/coinbase-connector/blob/main/VERSION) bumped).
+## Logging
+
+#### Info
+- subscription messages sent to coinbase.
+- messages consumed from coinbase.
+#### Warnings
+- coinbase reconnection errors.
 
 ## Local Testing
 
@@ -26,15 +28,6 @@ There is a packaged chart published [here](https://github.com/dyllamt/coinbase-c
 - `make test-unit` tests live message consumption to a mock kafka stream.
 - `make test-integration` tests helm deployment with kafka broker.
 
-## Logging
-
-#### Info
-- subscription messages sent to coinbase.
-- messages consumed from coinbase.
-
-#### Warnings
-- coinbase reconnection errors.
-
-## Replicas
-
-If multiple replicas are deployed, kafka consumers should implement deduplication logic.
+## CI/CD
+- `pull request`: format, unit, and integration tests.
+- `merge to main`: docker and helm release (if [version](https://github.com/dyllamt/coinbase-producer/blob/main/VERSION) bumped).
