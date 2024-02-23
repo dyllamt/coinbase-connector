@@ -1,10 +1,6 @@
 # coinbase-producer
 Kafka producer for coinbase feeds.
 
-#### Replicas
-
-If replicas are deployed, message deduplication should be implemented in downstream components.
-
 # Packages
 
 [Producer image](https://github.com/dyllamt/coinbase-producer/pkgs/container/coinbase-producer)
@@ -31,3 +27,7 @@ If replicas are deployed, message deduplication should be implemented in downstr
 ## CI/CD
 - `pull request`: format, unit, and integration tests.
 - `merge to main`: docker and helm release (if [version](https://github.com/dyllamt/coinbase-producer/blob/main/VERSION) bumped).
+
+## Deployment
+
+Message deduplication should be implemented if the producer is replicated.
