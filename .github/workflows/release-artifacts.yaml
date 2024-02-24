@@ -51,13 +51,6 @@ jobs:
             echo "should_release=true" >> $GITHUB_OUTPUT
           fi
 
-  check-version-check:
-    needs: new-version-check
-    runs-on: ubuntu-latest
-    steps:
-      - name: check
-        run: echo ${{ needs.new-version-check.outputs.should_release }}
-
   docker-push:
     needs: [get-version, new-version-check]
     if: ${{ needs.new-version-check.outputs.should_release == 'true' }}
@@ -82,7 +75,7 @@ jobs:
           push: true
           tags: ghcr.io/dyllamt/coinbase-producer:${{ needs.get-version.outputs.version }},ghcr.io/dyllamt/coinbase-producer:latest
 
-  helm-release:
+  helm-push:
     needs: [get-version, new-version-check]
     if: ${{ needs.new-version-check.outputs.should_release == 'true' }}
     permissions:
@@ -99,38 +92,44 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Update Chart Versions
-        run: |
-          # set version number for each chart
-          VERSION=${{ needs.get-version.outputs.version }}
-          CHARTS_DIR=charts
-          for CHART in $CHARTS_DIR/*; do
-            if [ -d "$CHART" ]; then
-              CHART_PATH="$CHART/Chart.yaml"
-              if [ -f "$CHART_PATH" ]; then
-                echo "Updating version in $CHART_PATH to $VERSION"
-                sed -i "s/version: .*/version: $VERSION/" $CHART_PATH
-              else
-                echo "No Chart.yaml found in $CHART"
-              fi
-            fi
-          done
-          # set default coinbase-producer docker image to current version
-          CHART_NAME="coinbase-producer"
-          VALUES_PATH="$CHARTS_DIR/$CHART_NAME/values.yaml"
-          IMAGE_TAG="ghcr.io/dyllamt/$CHART_NAME:$VERSION"
-          echo "Updating image in $VALUES_PATH to $IMAGE_TAG"
-          sed -i "s|image: .*|image: $IMAGE_TAG|" $VALUES_PATH
-
-      - name: Release Helm Charts
-        uses: helm/chart-releaser-action@v1.6.0
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
         with:
-          charts_dir: charts
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          version: '3.14.2'
+
+      - name: Log in to the OCI Registry
+        run: helm registry login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Package and Push coinbase-kafka Chart as OCI Artifact
+        run: |
+          VERSION=${{ needs.get-version.outputs.version }}
+          CHART_NAME="coinbase-kafka"
+          CHART_PATH="charts/$CHART_NAME"
+          # Update Chart.yaml version
+          sed -i "s/version: .*/version: $VERSION/" "$CHART_PATH/Chart.yaml"
+          # Package and push
+          CHART_REF="ghcr.io/dyllamt/charts/$CHART_NAME:$VERSION"
+          helm package $CHART_PATH --version $VERSION --app-version $VERSION
+          helm chart save $CHART_NAME-$VERSION.tgz $CHART_REF
+          helm chart push $CHART_REF
+
+      - name: Package and Push coinbase-producer Chart as OCI Artifact
+        run: |
+          VERSION=${{ needs.get-version.outputs.version }}
+          CHART_NAME="coinbase-producer"
+          CHART_PATH="charts/$CHART_NAME"
+          # Update Chart.yaml version
+          sed -i "s/version: .*/version: $VERSION/" "$CHART_PATH/Chart.yaml"
+          # Update values.yaml image tag
+          IMAGE_TAG="ghcr.io/dyllamt/$CHART_NAME:$VERSION"
+          sed -i "s|image: .*|image: $IMAGE_TAG|" "$CHART_PATH/values.yaml"
+          # Package and push
+          CHART_REF="ghcr.io/dyllamt/charts/$CHART_NAME:$VERSION"
+          helm package $CHART_PATH --version $VERSION --app-version $VERSION
+          helm chart push $CHART_NAME-$VERSION.tgz $CHART_REF
 
   helm-docs:
-    needs: get-version
+    needs: [get-version, new-version-check]
     permissions:
       contents: write
     runs-on: ubuntu-latest
