@@ -108,7 +108,7 @@ jobs:
           # Update Chart.yaml version
           sed -i "s/version: .*/version: $VERSION/" "$CHART_PATH/Chart.yaml"
           # Package and push
-          CHART_REF="ghcr.io/dyllamt/$CHART_NAME:$VERSION"
+          CHART_REF="ghcr.io/dyllamt/charts/$CHART_NAME:$VERSION"
           helm package $CHART_PATH --version $VERSION --app-version $VERSION
           helm chart save $CHART_NAME-$VERSION.tgz $CHART_REF
           helm chart push $CHART_REF
@@ -124,7 +124,7 @@ jobs:
           IMAGE_TAG="ghcr.io/dyllamt/$CHART_NAME:$VERSION"
           sed -i "s|image: .*|image: $IMAGE_TAG|" "$CHART_PATH/values.yaml"
           # Package and push
-          CHART_REF="ghcr.io/dyllamt/$CHART_NAME:$VERSION"
+          CHART_REF="ghcr.io/dyllamt/charts/$CHART_NAME:$VERSION"
           helm package $CHART_PATH --version $VERSION --app-version $VERSION
           helm chart push $CHART_NAME-$VERSION.tgz $CHART_REF
 
