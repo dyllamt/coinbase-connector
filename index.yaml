@@ -29,6 +29,14 @@ entries:
     version: 0.0.1
   coinbase-kafka:
   - apiVersion: v2
+    created: "2024-02-24T03:21:38.948596836Z"
+    description: Kafka broker chart for coinbase feeds.
+    digest: 8a239d61357523e3cbd9f6402cfb3ca02eec8229abcbe82b7ce12850195f736f
+    name: coinbase-kafka
+    urls:
+    - https://github.com/dyllamt/coinbase-producer/releases/download/coinbase-kafka-0.0.6/coinbase-kafka-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v2
     created: "2024-02-19T05:15:07.706635603Z"
     description: Simple kafka deployment for coinbase data.
     digest: 120a56703b78c74e39792c3ecbce2dc01a691ebcfe815db4c8a0a579230057fb
@@ -54,4 +62,13 @@ entries:
     urls:
     - https://github.com/dyllamt/coinbase-connector/releases/download/coinbase-kafka-0.0.1/coinbase-kafka-0.0.1.tgz
     version: 0.0.1
-generated: "2024-02-19T05:15:07.706658415Z"
+  coinbase-producer:
+  - apiVersion: v2
+    created: "2024-02-24T03:21:39.638747872Z"
+    description: Kafka producer for coinbase feeds.
+    digest: 9f0c8ae2595a2c12e268a1e355101db2f2b1935265cc5eac1d1c7b9c1036f356
+    name: coinbase-producer
+    urls:
+    - https://github.com/dyllamt/coinbase-producer/releases/download/coinbase-producer-0.0.6/coinbase-producer-0.0.6.tgz
+    version: 0.0.6
+generated: "2024-02-24T03:21:39.638781645Z"
