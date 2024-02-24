@@ -110,8 +110,7 @@ jobs:
           # Package and push
           CHART_REF="ghcr.io/dyllamt/charts/$CHART_NAME:$VERSION"
           helm package $CHART_PATH --version $VERSION --app-version $VERSION
-          helm chart save $CHART_NAME-$VERSION.tgz $CHART_REF
-          helm chart push $CHART_REF
+          helm push $CHART_NAME-$VERSION.tgz $CHART_REF
 
       - name: Package and Push coinbase-producer Chart as OCI Artifact
         run: |
@@ -126,7 +125,7 @@ jobs:
           # Package and push
           CHART_REF="ghcr.io/dyllamt/charts/$CHART_NAME:$VERSION"
           helm package $CHART_PATH --version $VERSION --app-version $VERSION
-          helm chart push $CHART_NAME-$VERSION.tgz $CHART_REF
+          helm push $CHART_NAME-$VERSION.tgz $CHART_REF
 
   helm-docs:
     needs: [get-version, new-version-check]
