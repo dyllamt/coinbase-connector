@@ -73,7 +73,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/dyllamt/coinbase-producer:${{ needs.get-version.outputs.version }},ghcr.io/dyllamt/coinbase-producer:latest
+          tags: ghcr.io/dyllamt/coinbase-producer-image:${{ needs.get-version.outputs.version }},ghcr.io/dyllamt/coinbase-producer-image:latest
 
   helm-push:
     needs: [get-version, new-version-check]
@@ -105,7 +105,7 @@ jobs:
           VERSION=${{ needs.get-version.outputs.version }}
           CHART_NAME="coinbase-kafka"
           CHART_PATH="charts/$CHART_NAME"
-          CHART_REF="oci://ghcr.io/dyllamt/charts/$CHART_NAME:$VERSION"
+          CHART_REF="oci://ghcr.io/dyllamt
           # Update Chart.yaml version
           sed -i "s/version: .*/version: $VERSION/" "$CHART_PATH/Chart.yaml"
           # Package and push
@@ -117,8 +117,8 @@ jobs:
           VERSION=${{ needs.get-version.outputs.version }}
           CHART_NAME="coinbase-producer"
           CHART_PATH="charts/$CHART_NAME"
-          CHART_REF="oci://ghcr.io/dyllamt/charts/$CHART_NAME:$VERSION"
-          IMAGE_TAG="ghcr.io/dyllamt/$CHART_NAME:$VERSION"
+          CHART_REF="oci://ghcr.io/dyllamt
+          IMAGE_TAG="ghcr.io/dyllamt/$CHART_NAME-image:$VERSION"
           # Update Chart.yaml version
           sed -i "s/version: .*/version: $VERSION/" "$CHART_PATH/Chart.yaml"
           # Update values.yaml image tag
