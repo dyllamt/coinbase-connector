@@ -1,23 +1,22 @@
-# coinbase-connector
-Connector between coinbase websocket feeds and kafka.
+<div align="center">
 
-# Contents
+<h1>coinbase-producer</h1>
+<p>Kafka producer for coinbase feeds.</p>
 
-The application impliments an async webserver that subscribes to coinbase websocket feeds and forwards the messages to kafka. It is recommended that you deploy it in a replica set.
+![](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
+[![](https://img.shields.io/badge/docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/dyllamt/coinbase-producer/pkgs/container/coinbase-producer)
+[![](https://img.shields.io/badge/helm-0F1689?style=for-the-badge&logo=Helm&labelColor=0F1689)](https://github.com/dyllamt/coinbase-producer/tree/gh-pages/)
 
-## Docker
+</div>
 
-There is a docker image of the application published [here](https://github.com/dyllamt/coinbase-connector/pkgs/container/coinbase-connector).
 
-## Helm
+## Logging
 
-There is a packaged chart published [here](https://github.com/dyllamt/coinbase-connector/tree/gh-pages). A starter chart for kafka is also included.
-
-# Developer Notes
-
-## CI/CD
-- on pull requests: format, unit, and integration tests.
-- merge into main: docker and helm release (if [version](https://github.com/dyllamt/coinbase-connector/blob/main/VERSION) bumped).
+#### Info
+- subscription messages sent to coinbase.
+- messages consumed from coinbase.
+#### Warnings
+- coinbase reconnection errors.
 
 ## Local Testing
 
@@ -26,15 +25,10 @@ There is a packaged chart published [here](https://github.com/dyllamt/coinbase-c
 - `make test-unit` tests live message consumption to a mock kafka stream.
 - `make test-integration` tests helm deployment with kafka broker.
 
-## Logging
+## CI/CD
+- `pull request` format, unit, and integration tests.
+- `merge to main` docker and helm release (if [version](https://github.com/dyllamt/coinbase-producer/blob/main/VERSION) bumped).
 
-#### Info
-- subscription messages sent to coinbase.
-- messages consumed from coinbase.
+## Deployment
 
-#### Warnings
-- coinbase reconnection errors.
-
-## Replicas
-
-If multiple replicas are deployed, kafka consumers should implement deduplication logic.
+Message deduplication should be implemented if the producer is replicated.

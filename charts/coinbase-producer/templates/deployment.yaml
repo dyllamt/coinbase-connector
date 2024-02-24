@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.connector.deploymentName }}
+  name: {{ .Values.producer.deploymentName }}
 spec:
-  replicas: {{ .Values.connector.replicas }}
+  replicas: {{ .Values.producer.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.connector.appName }}
+      app: {{ .Values.producer.appName }}
   template:
     metadata:
       labels:
-        app: {{ .Values.connector.appName }}
+        app: {{ .Values.producer.appName }}
       annotations:
         rollme: {{ randAlphaNum 5 | quote }}
     spec:
@@ -29,9 +29,9 @@ spec:
             - name: KAFKA_CLUSTER_NAME
               value: {{ .Values.kafka.clusterName }}
       containers:
-        - name: {{ .Values.connector.appName }}
-          image: {{ .Values.connector.image }}
-          imagePullPolicy: {{ .Values.connector.imagePullPolicy }}
+        - name: {{ .Values.producer.appName }}
+          image: {{ .Values.producer.image }}
+          imagePullPolicy: {{ .Values.producer.imagePullPolicy }}
           ports:
             - containerPort: 8000
           env:

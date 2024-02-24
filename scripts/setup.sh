@@ -13,4 +13,4 @@ helm install strimzi-operator strimzi/strimzi-kafka-operator --namespace $NAMESP
 helm install coinbase-kafka ../charts/coinbase-kafka/ -f ../charts/coinbase-kafka/values.yaml --namespace $NAMESPACE --wait
 
 # coinbase connector
-helm install coinbase-connector ../charts/coinbase-connector/ -f ../charts/coinbase-connector/values.yaml --namespace $NAMESPACE --wait
+helm install coinbase-producer ../charts/coinbase-producer/ -f ../charts/coinbase-producer/values.yaml --namespace $NAMESPACE --wait

@@ -4,14 +4,14 @@ import json
 import coinbase.main as main
 
 
-def test_connect_and_serve(kafka_producer):
+def test_connect_and_serve_messages(kafka_producer):
     print("cool")
 
     # run streaming loop for 10 seconds
     try:
         asyncio.run(
             asyncio.wait_for(
-                main.connect_and_serve(main.default_coinbase_address, producer=kafka_producer, topic=""),
+                main.connect_and_serve_messages(main.default_coinbase_address, producer=kafka_producer, topic=""),
                 timeout=5,
             )
         )

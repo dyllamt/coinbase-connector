@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           REGISTRY="ghcr.io"
-          REPO="dyllamt/coinbase-connector"
+          REPO="dyllamt/coinbase-producer"
           TAG="$VERSION"
           MANIFEST_URL="https://$REGISTRY/v2/$REPO/manifests/$TAG"
 
@@ -80,7 +80,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/dyllamt/coinbase-connector:${{ needs.get-version.outputs.version }},ghcr.io/dyllamt/coinbase-connector:latest
+          tags: ghcr.io/dyllamt/coinbase-producer:${{ needs.get-version.outputs.version }},ghcr.io/dyllamt/coinbase-producer:latest
 
   helm-release:
     needs: [get-version, new-version-check]
@@ -115,8 +115,8 @@ jobs:
               fi
             fi
           done
-          # set default coinbase-connector docker image to current version
-          CHART_NAME="coinbase-connector"
+          # set default coinbase-producer docker image to current version
+          CHART_NAME="coinbase-producer"
           VALUES_PATH="$CHARTS_DIR/$CHART_NAME/values.yaml"
           IMAGE_TAG="ghcr.io/dyllamt/$CHART_NAME:$VERSION"
           echo "Updating image in $VALUES_PATH to $IMAGE_TAG"

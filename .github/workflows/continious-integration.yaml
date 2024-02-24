@@ -45,7 +45,7 @@ jobs:
         run: make docker-build
 
       - name: Load Docker Image into kind Cluster
-        run: kind load docker-image coinbase-connector --name github-cluster
+        run: kind load docker-image coinbase-producer --name github-cluster
 
       - name: Install dependencies
         run: make install
